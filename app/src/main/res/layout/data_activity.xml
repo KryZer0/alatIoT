@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    >
+    <GridLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="8dp"
+        >
+        <EditText
+            android:id="@+id/searchEdit"
+            android:layout_width="250dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_columnWeight="2"
+            />
+        <Button
+            android:id="@+id/searchButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Cari"
+            android:layout_columnWeight="2"
+            android:textColor="@color/white"
+            android:background="@drawable/rounded_trans_btn"
+            />
+    </GridLayout>
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:scrollbars="vertical"
+        android:background="#2b2b2b"
+        >
+        <TableLayout
+            android:id="@+id/tableAbsensi"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:stretchColumns="1">
+
+            <TableRow>
+                <TextView
+                    android:id="@+id/headerNo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/squared_box"
+                    android:text="no"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/headerGas"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/squared_box"
+                    android:text="Gas Co"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+                <TextView
+                    android:id="@+id/headerGas2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/squared_box"
+                    android:text="Gas Co2"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/headerGasHc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/squared_box"
+                    android:text="Gas HC"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+
+                <TextView
+                    android:id="@+id/headerKet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/squared_box"
+                    android:text="Keterangan"
+                    android:gravity="center"
+                    android:padding="8dp"
+                    android:textStyle="bold"
+                    android:textColor="@color/white"/>
+            </TableRow>
+        </TableLayout>
+    </ScrollView>
+</LinearLayout>
