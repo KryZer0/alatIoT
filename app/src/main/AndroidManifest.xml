@@ -20,7 +20,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".menuActivity"/>
         <activity android:name=".DataActivity"/>
+        <activity android:name=".monitoringActivity"/>
     </application>
 
 </manifest>

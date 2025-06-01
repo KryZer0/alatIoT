@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
             }
 
             // Pindah ke aktivitas utama/dashboard
-            Intent intent = new Intent(LoginActivity.this, DataActivity.class);
+            Intent intent = new Intent(LoginActivity.this, menuActivity.class);
             startActivity(intent);
         }
     }

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/mainLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#1D1E22"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Monitor ●"
+        android:textColor="#FFFFFF"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/humidityLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Humidity"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/title"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/humidityValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="50%"
+        android:textSize="28sp"
+        android:textColor="#8888FF"
+        app:layout_constraintTop_toBottomOf="@+id/humidityLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="12dp" />
+
+    <!-- CO -->
+    <TextView
+        android:id="@+id/coLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Co"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/humidityValue"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/coValue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1.78ppm"
+        android:textColor="#4444AA"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/coLabel"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <TextView
+        android:id="@+id/co2Label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="CO2"
+        android:textColor="#CCCCCC"
+        android:textSize="12sp"
+        app:layout_constraintTop_toBottomOf="@+id/humidityValue"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <TextView
+        android:id="@+id/co2Value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="139.98ppm"
+        android:textColor="#FF4B5A"
+        android:textSize="24sp"
+        app:layout_constraintTop_toBottomOf="@+id/co2Label"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- Status Indicator -->
+    <TextView
+        android:id="@+id/statusLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Status"
+        android:textColor="#FFFFFF"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/co2Value"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="24dp" />
+
+    <View
+        android:id="@+id/statusIndicator"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:backgroundTint="#29DB93"
+        android:background="@drawable/circle_background"
+        app:layout_constraintTop_toBottomOf="@+id/statusLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Garis dan label bawah -->
+    <TextView
+        android:id="@+id/noDataLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No data"
+        android:textColor="#AAAAAA"
+        android:textSize="14sp"
+        app:layout_constraintTop_toBottomOf="@+id/statusIndicator"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="32dp" />
+
+    <!-- Live and Time Range -->
+    <LinearLayout
+        android:id="@+id/timeOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintTop_toBottomOf="@+id/noDataLabel"
+        app:layout_constraintStart_toStartOf="parent"
+        android:layout_marginTop="16dp">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Live"
+            android:textSize="12sp"
+            android:backgroundTint="#29DB93"
+            android:textColor="#000000" />
+
+        <!-- Tambahkan tombol waktu lainnya (1h, 6h, 1d, dst.) sesuai kebutuhan -->
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
