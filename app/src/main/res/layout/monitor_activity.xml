@@ -45,7 +45,7 @@
         android:id="@+id/coLabel"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Co"
+        android:text="Temperature"
         android:textColor="#CCCCCC"
         android:textSize="12sp"
         app:layout_constraintTop_toBottomOf="@+id/humidityValue"
@@ -53,7 +53,7 @@
         android:layout_marginTop="16dp"/>
 
     <TextView
-        android:id="@+id/coValue"
+        android:id="@+id/tempValue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="1.78ppm"
@@ -77,7 +77,7 @@
         android:id="@+id/co2Value"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="139.98ppm"
+        android:text="139.98"
         android:textColor="#FF4B5A"
         android:textSize="24sp"
         app:layout_constraintTop_toBottomOf="@+id/co2Label"

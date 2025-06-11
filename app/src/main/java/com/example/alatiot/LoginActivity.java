@@ -24,6 +24,8 @@ public class LoginActivity extends AppCompatActivity {
         buttonLogin = findViewById(R.id.loginButton);
 
         buttonLogin.setOnClickListener(v -> loginUser());
+        // Fungsi mengirim data random ke firebase
+//      firebaseHelper.kirimDataRandomKeFirebase();
     }
 
     private void loginUser() {

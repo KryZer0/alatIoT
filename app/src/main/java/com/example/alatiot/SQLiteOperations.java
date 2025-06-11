@@ -32,6 +32,25 @@ public class SQLiteOperations
 
         db.close();
     }
+
+    void addData(Double humidity, Double temp, String ledStatus) {
+        ContentValues values = new ContentValues();
+        values.put(COLUMN_HUMIDITY, humidity);
+        values.put(COLUMN_TEMPERATURE, temp);
+        values.put(COLUMN_LED, ledStatus.equals("0") ? 0 : 1); // Simpan sebagai integer 0 atau 1
+
+        // Default values jika nilai sensor gas belum tersedia
+        values.put(COLUMN_GASCO, 0.0);
+        values.put(COLUMN_GASCO2, 0.0);
+        values.put(COLUMN_GASHC, 0.0);
+        values.put(COLUMN_KETERANGAN, "N/A");
+
+        SQLiteDatabase db = sqliteHelper.getWritableDatabase();
+        db.insert(TABLE_DATA, null, values);
+        db.close();
+    }
+
+
     DataModel getData(int id) {
         DataModel dataItem = new DataModel();
 
