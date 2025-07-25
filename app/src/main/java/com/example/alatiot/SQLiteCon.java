@@ -10,8 +10,6 @@ public class SQLiteCon {
         static final String COLUMN_ID = "id_data";
         static final String COLUMN_GASCO = "gasco";
         static final String COLUMN_GASCO2 = "gasco2";
-        static final String COLUMN_GASHC = "gashc";
-        static final String COLUMN_HUMIDITY = "humidity";
         static final String COLUMN_TEMPERATURE = "temperature";
         static final String COLUMN_LED = "led";
         static final String COLUMN_KETERANGAN = "keterangan";

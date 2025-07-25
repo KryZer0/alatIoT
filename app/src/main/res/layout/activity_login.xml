@@ -4,14 +4,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#2b2b2b"
+    android:background="#ffffff"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/logo"
         android:layout_width="160dp"
         android:layout_height="160dp"
-        android:background="@mipmap/ic_launcher"
+        android:background="@drawable/air"
+        android:backgroundTint="#6897bb"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20dp"/>
 
@@ -19,10 +20,10 @@
         android:layout_width="match_parent"
         android:layout_height="54dp"
         android:layout_marginTop="8dp"
-        android:background="#fff"
+        android:background="#2b2b2b"
         android:gravity="center"
-        android:text="Contoh"
-        android:textColor="#2b2b2b"
+        android:text="Monitoring Emisi"
+        android:textColor="#fff"
         android:textSize="28sp"
         android:textStyle="bold" />
 
@@ -85,18 +86,19 @@
             android:layout_width="150dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:text="don't have an account"
-            android:textColor="#fff"
+            android:text="Login sebagai tamu"
+            android:textColor="#2b2b2b"
             android:textSize="12sp"
             android:textStyle="bold" />
 
-        <TextView
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:gravity="center_vertical"
-            android:onClick="SignUp"
-            android:text="sign up"
-            android:textColor="#48C2B6"
+        <Button
+            android:id="@+id/loginGuess"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="Login"
+            android:background="@drawable/rounded_blue_btn"
+            android:textColor="#fff"
             android:textSize="12dp"
             android:textStyle="bold" />
 

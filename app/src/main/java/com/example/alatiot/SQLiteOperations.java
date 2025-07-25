@@ -24,7 +24,6 @@ public class SQLiteOperations
         ContentValues values = new ContentValues();
         values.put(COLUMN_GASCO, dataModel.getGasCo());
         values.put(COLUMN_GASCO2, dataModel.getGasCo2());
-        values.put(COLUMN_GASHC, dataModel.getGasHc());
         values.put(COLUMN_KETERANGAN, dataModel.getKeterangan());
 
         SQLiteDatabase db = sqliteHelper.getWritableDatabase();
@@ -33,16 +32,11 @@ public class SQLiteOperations
         db.close();
     }
 
-    void addData(Double humidity, Double temp, String ledStatus) {
+    void addData(Double gasCo, Double gasCo2, Double temp, String ket) {
         ContentValues values = new ContentValues();
-        values.put(COLUMN_HUMIDITY, humidity);
+        values.put(COLUMN_GASCO, gasCo);
+        values.put(COLUMN_GASCO2, gasCo2);
         values.put(COLUMN_TEMPERATURE, temp);
-        values.put(COLUMN_LED, ledStatus.equals("0") ? 0 : 1); // Simpan sebagai integer 0 atau 1
-
-        // Default values jika nilai sensor gas belum tersedia
-        values.put(COLUMN_GASCO, 0.0);
-        values.put(COLUMN_GASCO2, 0.0);
-        values.put(COLUMN_GASHC, 0.0);
         values.put(COLUMN_KETERANGAN, "N/A");
 
         SQLiteDatabase db = sqliteHelper.getWritableDatabase();
@@ -58,7 +52,6 @@ public class SQLiteOperations
                 COLUMN_ID,
                 COLUMN_GASCO,
                 COLUMN_GASCO2,
-                COLUMN_GASHC,
                 COLUMN_KETERANGAN
         };
         String selection = COLUMN_ID + " = ?";
@@ -83,7 +76,6 @@ public class SQLiteOperations
                 dataItem.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
                 dataItem.setGasCo(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GASCO))));
                 dataItem.setGasCo2(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GASCO2))));
-                dataItem.setGasHc(Double.parseDouble(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_GASHC))));
                 dataItem.setKeterangan(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN)));
 
                 Log.d("getUser(" + id + ")", dataItem.toString());
@@ -106,7 +98,7 @@ public class SQLiteOperations
                 dataItems.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
                 dataItems.setGasCo(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GASCO)));
                 dataItems.setGasCo2(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GASCO2)));
-                dataItems.setGasHc(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GASHC)));
+                dataItems.setTemperature(cursor.getColumnIndexOrThrow(COLUMN_TEMPERATURE));
                 dataItems.setKeterangan(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN)));
                 dataModels.add(dataItems);
             } while (cursor.moveToNext());
@@ -130,7 +122,6 @@ public class SQLiteOperations
         ContentValues values = new ContentValues();
         values.put(COLUMN_GASCO, userItem.getGasCo());
         values.put(COLUMN_GASCO2, userItem.getGasCo2());
-        values.put(COLUMN_GASHC, userItem.getGasHc());
         values.put(COLUMN_KETERANGAN, userItem.getKeterangan());
 
         SQLiteDatabase db = sqliteHelper.getWritableDatabase();
@@ -178,4 +169,50 @@ public class SQLiteOperations
         db.close();
         return user;
     }
+
+    DataModel getLastData() {
+        DataModel dataItem = new DataModel();
+
+        String[] projection = {
+                COLUMN_ID,
+                COLUMN_GASCO,
+                COLUMN_GASCO2,
+                COLUMN_TEMPERATURE,
+                COLUMN_LED,
+                COLUMN_KETERANGAN,
+        };
+
+        SQLiteDatabase db = sqliteHelper.getReadableDatabase();
+
+        Cursor cursor = db.query(
+                TABLE_DATA,
+                projection,
+                null,
+                null,
+                null,
+                null,
+                COLUMN_ID + " DESC",
+                "1"
+        );
+
+        if (cursor != null) {
+            if (cursor.getCount() > 0) {
+                cursor.moveToFirst();
+
+                dataItem.setId(cursor.getInt(cursor.getColumnIndexOrThrow(COLUMN_ID)));
+                dataItem.setGasCo(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GASCO)));
+                dataItem.setGasCo2(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_GASCO2)));
+                dataItem.setTemperature(cursor.getDouble(cursor.getColumnIndexOrThrow(COLUMN_TEMPERATURE)));
+                dataItem.setLed(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_LED)));
+                dataItem.setKeterangan(cursor.getString(cursor.getColumnIndexOrThrow(COLUMN_KETERANGAN)));
+
+                Log.d("getLastData", dataItem.toString());
+            }
+            cursor.close();
+        }
+
+        return dataItem;
+    }
+
+
 }

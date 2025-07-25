@@ -22,8 +22,6 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_GASCO + " REAL, " +
                         COLUMN_GASCO2 + " REAL, " +
-                        COLUMN_GASHC + " REAL, " +
-                        COLUMN_HUMIDITY + " REAL, " +
                         COLUMN_TEMPERATURE + " REAL, " +
                         COLUMN_LED + " TEXT, " +
                         COLUMN_KETERANGAN + " TEXT)";
@@ -43,25 +41,23 @@ public class SQLiteHelper extends SQLiteOpenHelper {
     }
 
     public void insertDummyData(SQLiteDatabase db) {
-        String insertData = "INSERT INTO " + TABLE_DATA + " (" +
-                COLUMN_GASCO + ", " +
-                COLUMN_GASCO2 + ", " +
-                COLUMN_GASHC + ", " +
-                COLUMN_HUMIDITY + ", " +
-                COLUMN_TEMPERATURE + ", " +
-                COLUMN_LED + ", " +
-                COLUMN_KETERANGAN + ") VALUES " +
-                "(10.5, 20.3, 5.6, 55.0, 28.5, '0', 'Normal'), " +
-                "(12.8, 18.7, 6.1, 65.0, 30.0, '1', 'Warning'), " +
-                "(9.3, 21.1, 4.9, 50.0, 27.0, '0', 'Safe');";
+//        String insertData = "INSERT INTO " + TABLE_DATA + " (" +
+//                COLUMN_GASCO + ", " +
+//                COLUMN_GASCO2 + ", " +
+//                COLUMN_TEMPERATURE + ", " +
+//                COLUMN_LED + ", " +
+//                COLUMN_KETERANGAN + ") VALUES " +
+//                "(10.5, 20.3, 28.5, '0', 'Normal'), " +
+//                "(12.8, 18.7, 30.0, '1', 'Warning'), " +
+//                "(9.3, 21.1, 27.0, '0', 'Safe');";
 
         String insertUsers = "INSERT INTO " + TABLE_USERS + " (" +
                 COLUMN_USERNAME + ", " + COLUMN_PASSWORD + ") VALUES " +
-                "('admin', 'password123'), " +
+                "('admin', 'admin'), " +
                 "('ahmad', 'ahmad'), " +
                 "('user2', 'securepass');";
 
-        db.execSQL(insertData);
+//        db.execSQL(insertData);
         db.execSQL(insertUsers);
     }
 
