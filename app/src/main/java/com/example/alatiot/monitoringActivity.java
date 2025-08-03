@@ -89,7 +89,7 @@ public class monitoringActivity extends AppCompatActivity {
                 COStatus.setTextColor(ContextCompat.getColor(this, R.color.green));
             }
 
-            if (gasCO2 > 3000 || temperature > 35 || gasCO > 700) {
+            if (gasCO2 > 3000 || temperature > 50 || gasCO > 1000) {
                 led.setBackgroundTintList(getResources().getColorStateList(R.color.red, null));
                 led.setText("Bad");
                 keterangan = "Bad";
@@ -132,7 +132,7 @@ public class monitoringActivity extends AppCompatActivity {
 
         tampilkanDataKeTabel();
     }
-    @SuppressLint("SetTextI18n")
+
     private void tampilkanDataKeTabel() {
         tableLayout.removeViews(1, Math.max(0, tableLayout.getChildCount() - 1));
 
