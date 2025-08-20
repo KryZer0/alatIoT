@@ -4,14 +4,15 @@ public class DataModel {
     private String Keterangan, Waktu;
     private double GasCo, GasCo2;
     private double temperature;
-    private String led;
+    private String led, nama, jenis, status, solusi;
     private int id;
+    private String documentId;
 
     public DataModel() {
     }
 
     public DataModel(int id, double GasCo, double GasCo2, double GasHc, double temperature, String led,
-                     String Keterangan, String Waktu) {
+                     String Keterangan, String Waktu, String nama, String jenis, String status, String solusi) {
         this.id = id;
         this.GasCo = GasCo;
         this.GasCo2 = GasCo2;
@@ -20,6 +21,10 @@ public class DataModel {
         this.led = led;
         this.Keterangan = Keterangan;
         this.Waktu = Waktu;
+        this.nama = nama;
+        this.jenis = jenis;
+        this.status = status;
+        this.solusi = solusi;
     }
 
     // Getter
@@ -31,7 +36,17 @@ public class DataModel {
     public String getLed() { return led; }
     public String getKeterangan() { return Keterangan; }
     public String getWaktu() { return Waktu; }
+    public String getNama() { return nama; }
+    public String getJenis() { return jenis; }
+    public String getStatus() { return status; }
+    public String getSolusi() { return solusi; }
+    public String getDocumentId() {
+        return documentId;
+    }
 
+    public void setDocumentId(String documentId) {
+        this.documentId = documentId;
+    }
     // Setter
     public void setId(int id) { this.id = id; }
     public void setGasCo(double gasCo) { this.GasCo = gasCo; }

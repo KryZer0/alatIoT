@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <meta-data
+        android:name="firebase_analytics_collection_enabled"
+        android:value="false" />
     <application
         android:name="androidx.multidex.MultiDexApplication"
         android:allowBackup="true"
@@ -13,7 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.AlatIoT"
         tools:targetApi="31">
-
         <activity
             android:name=".LoginActivity"
             android:exported="true">
@@ -25,6 +28,10 @@
         <activity android:name=".menuActivity"/>
         <activity android:name=".DataActivity"/>
         <activity android:name=".monitoringActivity"/>
+        <activity android:name=".SolusiActivity"/>
+        <activity android:name=".FormJawabActivity" />
+        <activity android:name=".SolusiMekanikActivity"/>
+        <activity android:name=".FormJawabMekanikActivity"/>
     </application>
 
 </manifest>

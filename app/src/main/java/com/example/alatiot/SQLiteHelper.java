@@ -20,6 +20,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
         String SQL_CREATE_DATA_TABLE =
                 "CREATE TABLE " + TABLE_DATA + " (" +
                         COLUMN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                        COLUMN_NAMA_KENDARAAN + " TEXT NULL, " +
+                        COLUMN_JENIS_KENDARAAN + " TEXT NULL, " +
                         COLUMN_GASCO + " REAL, " +
                         COLUMN_GASCO2 + " REAL, " +
                         COLUMN_TEMPERATURE + " REAL, " +
@@ -30,7 +32,8 @@ public class SQLiteHelper extends SQLiteOpenHelper {
                 "CREATE TABLE " + TABLE_USERS + " (" +
                         COLUMN_ID_USERS + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                         COLUMN_USERNAME + " TEXT, " +
-                        COLUMN_PASSWORD + " TEXT)";
+                        COLUMN_PASSWORD + " TEXT," +
+                        COLUMN_ROLE + " TEXT)";
 
         db.execSQL(SQL_CREATE_DATA_TABLE);
         db.execSQL(SQL_CREATE_USERS_TABLE);
@@ -52,10 +55,10 @@ public class SQLiteHelper extends SQLiteOpenHelper {
 //                "(9.3, 21.1, 27.0, '0', 'Safe');";
 
         String insertUsers = "INSERT INTO " + TABLE_USERS + " (" +
-                COLUMN_USERNAME + ", " + COLUMN_PASSWORD + ") VALUES " +
-                "('admin', 'admin'), " +
-                "('ahmad', 'ahmad'), " +
-                "('user2', 'securepass');";
+                COLUMN_USERNAME + ", " + COLUMN_PASSWORD + ", "+ COLUMN_ROLE + ") VALUES " +
+                "('admin', 'admin', 'user'), " +
+                "('owner', 'owner', 'owner'), " +
+                "('user2', 'securepass', 'user');";
 
 //        db.execSQL(insertData);
         db.execSQL(insertUsers);

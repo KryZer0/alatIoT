@@ -1,18 +1,32 @@
 package com.example.alatiot;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.media.MediaPlayer;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.ContextCompat;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -21,14 +35,22 @@ public class monitoringActivity extends AppCompatActivity {
 
     private TextView temp, gasCo, gasCo2, keteranganLabel, COStatus, CO2Status;
     private TextView led;
+    private Button record;
+    private boolean isRecording = false;
+    private boolean dangerDataSent = false;
+    private String namaKendaraan = "";
+    private String jenisKendaraan = "";
 
+    private FirebaseFirestore firestore;
     private TableLayout tableLayout;
+    private MediaPlayer mediaPlayer;
     private final LinkedList<HashMap<String, String>> dataList = new LinkedList<>();
     private final int MAX_ROWS = 5;
     private double lastTemp = -1;
     private double lastGasCo = -1;
     private double lastGasCo2 = -1;
     private String lastLed = "";
+
 
     private SQLiteOperations dbOperation;
 
@@ -39,11 +61,12 @@ public class monitoringActivity extends AppCompatActivity {
         initializeViews();
 
         dbOperation = new SQLiteOperations(this);
+        firestore = FirebaseFirestore.getInstance();
 
+        // Data awal
         firebaseHelper.ambilDataSekali(new firebaseHelper.DataListener() {
             @Override
             public void onDataReceived(Double temperature, Double gasCO, Double gasCO2) {
-                Log.d("FIREBASE_INIT", "Data awal: " + temperature + ", " + gasCO + ", " + gasCO2);
                 updateUIAndStore(temperature, gasCO, gasCO2);
             }
 
@@ -53,6 +76,7 @@ public class monitoringActivity extends AppCompatActivity {
             }
         });
 
+        // Data realtime
         firebaseHelper.ambilDataRealtime(new firebaseHelper.DataListener() {
             @Override
             public void onDataReceived(Double temperature, Double gasCO, Double gasCO2) {
@@ -64,6 +88,59 @@ public class monitoringActivity extends AppCompatActivity {
                 Log.e("FIREBASE_ERROR", "Gagal pantau data: " + error.getMessage());
             }
         });
+
+        // Tombol record
+        record.setOnClickListener(v -> {
+            if (!isRecording) {
+                showRecordDialog();
+            } else {
+                stopRecording();
+            }
+        });
+    }
+
+    private void showRecordDialog() {
+        View dialogView = getLayoutInflater().inflate(R.layout.dialog_record_form, null);
+
+        EditText edtNama = dialogView.findViewById(R.id.edtNamaKendaraan);
+        Spinner spnJenis = dialogView.findViewById(R.id.spnJenisKendaraan);
+
+        // Isi spinner contoh data
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                new String[]{"Pilih jenis", "2 Tak", "4 Tak"});
+        spnJenis.setAdapter(adapter);
+
+        new AlertDialog.Builder(this)
+                .setTitle("Mulai Rekam Data")
+                .setView(dialogView)
+                .setPositiveButton("Mulai", (dialog, which) -> {
+                    String nama = edtNama.getText().toString().trim();
+                    String jenis = spnJenis.getSelectedItem().toString();
+
+                    if (nama.isEmpty() || jenis.equals("Pilih jenis")) {
+                        Toast.makeText(this, "Lengkapi semua data!", Toast.LENGTH_SHORT).show();
+                    } else {
+                        namaKendaraan = nama;
+                        jenisKendaraan = jenis;
+                        startRecording();
+                    }
+                })
+                .setNegativeButton("Batal", null)
+                .show();
+    }
+
+    private void startRecording() {
+        isRecording = true;
+        dangerDataSent = false;
+        record.setText("Stop");
+        Toast.makeText(this, "Perekaman dimulai", Toast.LENGTH_SHORT).show();
+    }
+
+    private void stopRecording() {
+        isRecording = false;
+        record.setText("Record");
+        Toast.makeText(this, "Perekaman dihentikan", Toast.LENGTH_SHORT).show();
     }
 
     private void updateUIAndStore(Double temperature, Double gasCO, Double gasCO2) {
@@ -89,11 +166,48 @@ public class monitoringActivity extends AppCompatActivity {
                 COStatus.setTextColor(ContextCompat.getColor(this, R.color.green));
             }
 
-            if (gasCO2 > 3000 || temperature > 50 || gasCO > 1000) {
+            if (gasCO2 > 3 || temperature > 50 || gasCO > 1) {
                 led.setBackgroundTintList(getResources().getColorStateList(R.color.red, null));
                 led.setText("Bad");
                 keterangan = "Bad";
-                keteranganLabel.setText("Uji Emisi Gagal(Kualitas udara buruk)");
+                keteranganLabel.setText("Uji Emisi Gagal (Kualitas udara buruk)");
+
+                // Vibrate
+                Vibrator vibrator = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+                if (vibrator != null && vibrator.hasVibrator()) {
+                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                        vibrator.vibrate(VibrationEffect.createOneShot(1000, VibrationEffect.DEFAULT_AMPLITUDE));
+                    } else {
+                        vibrator.vibrate(1000);
+                    }
+                }
+
+                // Sound
+                playAlertSound();
+
+                if (isRecording && !dangerDataSent) {
+                    HashMap<String, Object> data = new HashMap<>();
+                    data.put("gasCO", gasCO);
+                    data.put("gasCO2", gasCO2);
+                    data.put("temperature", temperature);
+                    data.put("keterangan", keterangan);
+                    data.put("namaKendaraan", namaKendaraan);
+                    data.put("jenisKendaraan", jenisKendaraan);
+                    data.put("solusi", "Belum Ada solusi");
+                    data.put("status", "Menunggu Solusi");
+                    data.put("timestamp", System.currentTimeMillis());
+
+                    firestore.collection("documentID")
+                            .add(data)
+                            .addOnSuccessListener(documentReference -> {
+                                Log.d("FIREBASE", "Data bahaya berhasil dikirim dengan ID: " + documentReference.getId());
+                            })
+                            .addOnFailureListener(e -> {
+                                Log.e("FIREBASE", "Gagal kirim data bahaya: " + e.getMessage());
+                            });
+
+                    dangerDataSent = true;
+                }
             } else {
                 led.setBackgroundTintList(getResources().getColorStateList(R.color.green, null));
                 led.setText("Good");
@@ -101,19 +215,19 @@ public class monitoringActivity extends AppCompatActivity {
                 keteranganLabel.setText("Uji Emisi Lolos");
             }
 
-            DataModel lastData = dbOperation.getLastData();
+            if (isRecording) {
+                DataModel lastData = dbOperation.getLastData();
+                boolean isDifferentFromDB = lastData == null ||
+                        lastData.getTemperature() != temperature ||
+                        lastData.getGasCo() != gasCO ||
+                        lastData.getGasCo2() != gasCO2;
 
-            boolean isDifferentFromDB = lastData == null ||
-                    lastData.getTemperature() != temperature ||
-                    lastData.getGasCo() != gasCO ||
-                    lastData.getGasCo2() != gasCO2;
-
-            if (isDifferentFromDB) {
-                dbOperation.addData(gasCO, gasCO2, temperature, keterangan);
-
-                lastTemp = temperature;
-                lastGasCo = gasCO;
-                lastGasCo2 = gasCO2;
+                if (isDifferentFromDB) {
+                    dbOperation.addData(gasCO, gasCO2, temperature, keterangan, namaKendaraan, jenisKendaraan);
+                    lastTemp = temperature;
+                    lastGasCo = gasCO;
+                    lastGasCo2 = gasCO2;
+                }
             }
             tambahDataKeTabel(gasCO, gasCO2, temperature, keterangan);
         }
@@ -191,5 +305,34 @@ public class monitoringActivity extends AppCompatActivity {
         CO2Status = findViewById(R.id.co2Status);
         keteranganLabel = findViewById(R.id.kesimpulanValue);
         tableLayout = findViewById(R.id.tableAbsensi);
+        record = findViewById(R.id.record);
+    }
+
+    private void playAlertSound() {
+        stopAlertSound();
+        mediaPlayer = MediaPlayer.create(this, R.raw.alert_sound);
+        mediaPlayer.start();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        stopAlertSound();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        stopAlertSound();
+    }
+
+    private void stopAlertSound() {
+        if (mediaPlayer != null) {
+            if (mediaPlayer.isPlaying()) {
+                mediaPlayer.stop();
+            }
+            mediaPlayer.release();
+            mediaPlayer = null;
+        }
     }
 }

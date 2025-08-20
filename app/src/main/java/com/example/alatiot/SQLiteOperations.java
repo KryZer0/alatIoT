@@ -32,8 +32,10 @@ public class SQLiteOperations
         db.close();
     }
 
-    void addData(Double gasCo, Double gasCo2, Double temp, String ket) {
+    void addData(Double gasCo, Double gasCo2, Double temp, String ket, String nama, String jenis) {
         ContentValues values = new ContentValues();
+        values.put(COLUMN_NAMA_KENDARAAN, nama);
+        values.put(COLUMN_JENIS_KENDARAAN,jenis);
         values.put(COLUMN_GASCO, gasCo);
         values.put(COLUMN_GASCO2, gasCo2);
         values.put(COLUMN_TEMPERATURE, temp);
@@ -153,7 +155,7 @@ public class SQLiteOperations
     }
     public UserModel getUser(String username, String password) {
         SQLiteDatabase db = sqliteHelper.getReadableDatabase();
-        String query = "SELECT " + COLUMN_USERNAME + ", " + COLUMN_PASSWORD +
+        String query = "SELECT " + COLUMN_USERNAME + ", " + COLUMN_PASSWORD + ", " + COLUMN_ROLE +
                 " FROM " + TABLE_USERS +
                 " WHERE " + COLUMN_USERNAME + " = ? AND " + COLUMN_PASSWORD + " = ?";
         Cursor cursor = db.rawQuery(query, new String[]{username, password});
@@ -162,7 +164,8 @@ public class SQLiteOperations
         if (cursor.moveToFirst()) {
             user = new UserModel(
                     cursor.getString(0),
-                    cursor.getString(1)
+                    cursor.getString(1),
+                    cursor.getString(2)
             );
         }
         cursor.close();

@@ -69,6 +69,24 @@
                 android:textColor="@color/white"
                 android:textSize="18sp"
                 android:textStyle="bold" />
+
+            <Button
+                android:id="@+id/solusi_btn"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:minHeight="140dp"
+                android:layout_marginVertical="8dp"
+                android:background="@drawable/rounded_blue_btn"
+                android:drawableBottom="@drawable/baseline_car_repair_24"
+                android:drawablePadding="20dp"
+                android:gravity="bottom|center"
+                android:paddingBottom="20dp"
+                android:text="Solusi"
+                android:textColor="@color/white"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+
         </LinearLayout>
     </ScrollView>
 </androidx.constraintlayout.widget.ConstraintLayout>

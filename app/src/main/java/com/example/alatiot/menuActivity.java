@@ -9,12 +9,16 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class menuActivity extends AppCompatActivity {
 
-    private Button monitor, data;
+    private Button monitor, data, solusi;
+    private String role, loginStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.dashboard_activity);
+        Intent intent = getIntent();
+        loginStatus = intent.getStringExtra("login");
+        role = intent.getStringExtra("role");
         findViewById();
         setClickListener();
     }
@@ -22,7 +26,14 @@ public class menuActivity extends AppCompatActivity {
     private void setClickListener()
     {
         monitor.setOnClickListener(v -> monitor());
-        data.setOnClickListener(v -> data());
+        solusi.setOnClickListener(v -> solusiMekanik());
+
+        if (isRoleOwner()){
+            data.setOnClickListener(v -> solusiTable());
+        } else {
+            data.setOnClickListener(v -> data());
+        }
+
     }
 
     private void monitor()
@@ -37,17 +48,37 @@ public class menuActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    private void solusiTable()
+    {
+        Intent intent = new Intent(menuActivity.this,SolusiActivity.class);
+        startActivity(intent);
+    }
+
+    private void solusiMekanik() {
+        Intent intent = new Intent(menuActivity.this, SolusiMekanikActivity.class);
+        startActivity(intent);
+    }
+
     private void findViewById() {
         monitor = findViewById(R.id.check_in_btn);
         data = findViewById(R.id.check_out_btn);
-
-        Intent intent = getIntent();
-        String loginStatus = intent.getStringExtra("login");
+        solusi = findViewById(R.id.solusi_btn);
 
         if ("user".equals(loginStatus)) {
             data.setVisibility(View.VISIBLE);
         } else if ("guess".equals(loginStatus)) {
             data.setVisibility(View.GONE);
         }
+
+        if (isRoleOwner()){
+            data.setText("solusi");
+            solusi.setVisibility(View.GONE);
+        } else {
+
+        }
+    }
+
+    private boolean isRoleOwner(){
+        return "owner".equals(role);
     }
 }

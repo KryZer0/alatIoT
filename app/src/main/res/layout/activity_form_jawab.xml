@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:dividerPadding="8dp"
+        android:showDividers="middle">
+
+        <!-- Nama Kendaraan -->
+        <TextView
+            android:text="Nama Kendaraan"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvNamaKendaraan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:enabled="false"/>
+
+        <!-- Jenis Kendaraan -->
+        <TextView
+            android:text="Jenis Kendaraan"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvJenisKendaraan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:enabled="false"/>
+
+        <!-- Keterangan -->
+        <TextView
+            android:text="Keterangan"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvKeterangan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:enabled="false"/>
+
+        <!-- Data Emisi -->
+        <TextView
+            android:text="Data Emisi"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:id="@+id/tvGasData"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:enabled="false"/>
+
+        <!-- Solusi -->
+        <TextView
+            android:text="Solusi"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/etSolusi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:hint="Masukkan solusi"/>
+
+        <!-- Status -->
+        <TextView
+            android:text="Status"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <EditText
+            android:id="@+id/etStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/squared_box"
+            android:padding="8dp"
+            android:enabled="false"
+            android:hint="-"/>
+
+        <!-- Tombol Simpan -->
+        <Button
+            android:id="@+id/btnSimpan"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Simpan"
+            android:layout_marginTop="16dp"/>
+    </LinearLayout>
+</ScrollView>

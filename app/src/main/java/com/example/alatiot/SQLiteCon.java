@@ -8,6 +8,8 @@ public class SQLiteCon {
     static class DataColumns implements BaseColumns {
         static final String TABLE_DATA = "data";
         static final String COLUMN_ID = "id_data";
+        static final String COLUMN_NAMA_KENDARAAN = "nama_kendaraan";
+        static final String COLUMN_JENIS_KENDARAAN = "jenis_kendaraan";
         static final String COLUMN_GASCO = "gasco";
         static final String COLUMN_GASCO2 = "gasco2";
         static final String COLUMN_TEMPERATURE = "temperature";
@@ -18,5 +20,6 @@ public class SQLiteCon {
         static final String COLUMN_ID_USERS = "id_users";
         static final String COLUMN_USERNAME = "username";
         static final String COLUMN_PASSWORD = "password";
+        static final String COLUMN_ROLE = "role";
     }
 }
